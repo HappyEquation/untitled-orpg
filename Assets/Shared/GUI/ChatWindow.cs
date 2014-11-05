@@ -51,17 +51,17 @@ public class ChatWindow : MonoBehaviour {
 		printGUIStyle.normal.textColor = Color.white;
 		printGUIStyle.wordWrap = true;
 		printGUIStyle.stretchWidth = false;
-		print("Alpha Build 1.0");
+		print("Alpha Build 1.0", false, "", "#00ffffff");
 	}
 
-	void print(string m, bool timeStamp = true)
+	void print(string m, bool timeStamp = true, string u = "", string MessageColor = "")
 	{
 		if (m.Length > maxLength) m = m.Substring(0, maxLength);
 		//m = m.Replace(System.Environment.NewLine, " ");
 
 		string ts = timeStamp ? DateTime.Now.ToString(dateFormat_12) : "";
 
-		log.Add(new LogMessage(m, username, ts));
+		log.Add(new LogMessage(m, u, ts, MessageColor));
 	
 		if(log.Count > maxLogMessages){
 			log.RemoveAt(0);
@@ -165,7 +165,7 @@ public class ChatWindow : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Return) || returnPressed)
 		{
 			if (stringToEdit != "") {
-				print(stringToEdit, showTimestamp);
+				print(stringToEdit, showTimestamp, username);
 				stringToEdit = "";
 			}
 			selectTextfield = !selectTextfield;
@@ -182,6 +182,10 @@ class LogMessage
 	public string user = "";
 	public string timestamp = "";
 
+	public string tsColor = "#ffa500ff";
+	public string userColor = "#00ff00ff";
+	public string messageColor = "";
+
 	public int length()
 	{
 		return toString().Length;
@@ -189,13 +193,24 @@ class LogMessage
 
 	public string toString()
 	{
-		return "<color=#ffa500ff>" + timestamp + "</color> <color=#00ff00ff>" + user + ":</color> " + message;
+		string m = "";
+		if (timestamp != "") {
+			m = tsColor != "" ? "<color=" + tsColor + ">" + timestamp + "</color>" : timestamp;
+		}
+		if (user != "") {
+			m = string.Concat(m, userColor != "" ? " <color=" + userColor + ">" +user+":</color> " : user+" ");
+		}
+		if (message != "") {
+			m = string.Concat(m, messageColor != "" ? "<color=" + messageColor + ">" + message + "</color>" : message);
+		}
+		return m;
 	}
 
-	public LogMessage(string m, string u="", string ts="")
+	public LogMessage(string m, string u="", string ts="", string MessageColor="")
 	{
 		message = m;
 		user = u;
 		timestamp = ts;
+		messageColor = MessageColor;
 	}
 }
