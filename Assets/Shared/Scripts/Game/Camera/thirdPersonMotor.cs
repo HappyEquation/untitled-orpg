@@ -63,7 +63,7 @@ public class thirdPersonMotor : MonoBehaviour
 	// If camera is moving, snap character to it.
 	public void SnapAlignCharacterWithCamera()
 	{
-		Debug.Log("moveVector.x: "+moveVector.x+" freeLook: " + thirdPersonCamera.instance.freeLook);
+		//Debug.Log("moveVector.x: "+moveVector.x+" freeLook: " + thirdPersonCamera.instance.freeLook);
 		if (moveVector != Vector3.zero && !thirdPersonCamera.instance.freeLook)
 		{
 			transform.rotation = Quaternion.Euler(transform.eulerAngles.x,

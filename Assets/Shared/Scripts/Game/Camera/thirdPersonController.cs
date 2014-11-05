@@ -32,18 +32,19 @@ public class thirdPersonController : MonoBehaviour
 		thirdPersonMotor.instance.verticalVelocity = thirdPersonMotor.instance.moveVector.y;
 		thirdPersonMotor.instance.moveVector = Vector3.zero;
 
-		// Match moveVector.z to vertical input
-		if (Input.GetAxis("Vertical") > deadZone || Input.GetAxis("Vertical") < -deadZone)
-		{
-			thirdPersonMotor.instance.moveVector += new Vector3(0, 0, Input.GetAxis("Vertical"));
-		}
+		if (!ChatWindow.instance.selectTextfield) {
+			// Match moveVector.z to vertical input
+			if (Input.GetAxis("Vertical") > deadZone || Input.GetAxis("Vertical") < -deadZone)
+			{
+				thirdPersonMotor.instance.moveVector += new Vector3(0, 0, Input.GetAxis("Vertical"));
+			}
 
-		// Match moveVector.x to horizontal input
-		if (Input.GetAxis("Horizontal") > deadZone || Input.GetAxis("Horizontal") < -deadZone)
-		{
-			thirdPersonMotor.instance.moveVector += new Vector3(Input.GetAxis("Horizontal"), 0, 0);
+			// Match moveVector.x to horizontal input
+			if (Input.GetAxis("Horizontal") > deadZone || Input.GetAxis("Horizontal") < -deadZone)
+			{
+				thirdPersonMotor.instance.moveVector += new Vector3(Input.GetAxis("Horizontal"), 0, 0);
+			}
 		}
-
 		// Get direction.
 		thirdPersonAnimator.instance.DetermineCurrentMoveDirection();
 	}

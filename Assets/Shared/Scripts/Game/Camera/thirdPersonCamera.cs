@@ -61,7 +61,10 @@ public class thirdPersonCamera : MonoBehaviour
 			return;
 		}
 
-		HandlePlayerInput();
+		if (!ChatWindow.instance.selectTextfield && !ChatWindow.instance.isScrolling)
+		{
+			HandlePlayerInput();
+		}
 
 		int count = 0;
 		do
